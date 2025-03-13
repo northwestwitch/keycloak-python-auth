@@ -1,2 +1,2 @@
 # keycloak-python-auth
-Example code of auth using keycloak and python
+Example code of auth using keycloak and Python Flask
