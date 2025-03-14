@@ -1,5 +1,6 @@
 # keycloak-python-auth
-Example code of auth using keycloak and python
+
+Example code of auth using keycloak and python Flask
 
 # Launch keycloak using docker-compose
 
@@ -25,6 +26,4 @@ To be completed
 ### Step 2: Configure the authentication flow
 
 To be completed
-
-
 
