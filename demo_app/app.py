@@ -62,9 +62,7 @@ def auth():
 @app.route("/logout", methods=["POST"])
 def logout():
     session.pop("user", None)
-    logout_url = f"{app.config['KEYCLOAK_LOGOUT_URL']}?redirect_uri={url_for('index', _external=True)}"
-
-    print(f"REDIRECT TO:{logout_url}")
+    logout_url = app.config["KEYCLOAK_LOGOUT_URL"]
     return redirect(logout_url)
 
 
