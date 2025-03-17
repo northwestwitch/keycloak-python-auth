@@ -6,14 +6,13 @@
     <title>Flask Keycloak Example</title>
 </head>
 <body>
-    <h1>Welcome to Flask demo app with Keycloak Authentication</h1>
+    <h1>Welcome to the Flask Keycloak Integration</h1>
 
     {% if user %}
-        <p>Logged in as: {{ user.name }}</p>
-        <a href="{{ url_for('views.logout_view') }}">Logout</a>
+    <p>Hello, {{ user['preferred_username'] }}!</p>
+    <p><a href="{{ url_for('views.logout_view') }}">Logout</a></p>
     {% else %}
-        <p>You are not logged in.</p>
-        <a href="{{ url_for('views.login_view') }}">Login with Keycloak</a>
+    <p><a href="{{ url_for('views.login_view') }}">Login with Keycloak</a></p>
     {% endif %}
 </body>
 </html>

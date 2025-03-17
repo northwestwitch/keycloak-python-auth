@@ -1,5 +1,5 @@
 [project]
-name = "keycloak-flask-auth"
+name = "keycloak_flask_auth"
 version = "0.1.0"
 description = "Flask application with Keycloak authentication"
 readme = "README.md"
@@ -13,10 +13,9 @@ classifiers = [
 ]
 dependencies = [
     "Flask==3.1.0",
-    "Authlib==1.5.1",
+    "keycloak-client==0.15.4",
     "gunicorn==23.0.0",
     "requests==2.32.3",
-    "flask_oauthlib==0.9.6"
 ]
 
 # Remove classifiers from here
