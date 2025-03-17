@@ -1,0 +1,29 @@
+[project]
+name = "keycloak-flask-auth"
+version = "0.1.0"
+description = "Flask application with Keycloak authentication"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [{ name = "Chiara Rasi" }]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Framework :: Flask",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent"
+]
+dependencies = [
+    "Flask==3.1.0",
+    "Authlib==1.5.1",
+    "gunicorn==23.0.0",
+    "requests==2.32.3",
+    "flask_oauthlib==0.9.6"
+]
+
+# Remove classifiers from here
+dynamic = []
+
+
+
+
+
+
