@@ -2,25 +2,19 @@ version: '3.7'
 
 services:
   postgres:
-    image: postgres:latest
-    ports:
-      - 5432:5432
+    image: postgres:16.2
     volumes:
-      - postgres_data:/var/lib/uam_postgresql/data
+      - postgres_data:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     networks:
-      - keycloak
+      - keycloak_network
 
   keycloak:
-    image: quay.io/keycloak/keycloak:24.0.5
-    command: start-dev
-    volumes:
-      - ./plugins/netzbegruenung.sms-authenticator-v24.0.10.jar:/opt/keycloak/providers/netzbegruenung.sms-authenticator-v24.0.10.jar
-      - ./plugins/keycloak-2fa-email-authenticator-1.0.0.0-SNAPSHOT.jar:/opt/keycloak/providers/keycloak-2fa-email-authenticator-1.0.0.0-SNAPSHOT.jar
-      - ./plugins/email:/opt/keycloak/themes/base/email
+    image: quay.io/keycloak/keycloak:23.0.6
+    command: start
     environment:
       KC_HOSTNAME: localhost
       KC_HOSTNAME_PORT: 8080
@@ -36,17 +30,16 @@ services:
       KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - 8080:8080
-      - 8443:8443
     restart: always
     depends_on:
       - postgres
     networks:
-      - keycloak
+      - keycloak_network
 
 volumes:
   postgres_data:
     driver: local
 
 networks:
-  keycloak:
+  keycloak_network:
     driver: bridge
