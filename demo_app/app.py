@@ -1,5 +1,3 @@
-import os
-
 from authlib.integrations.flask_client import OAuth
 from flask import Flask, redirect, render_template_string, session, url_for
 
@@ -11,7 +9,7 @@ app.secret_key = app.config["FLASK_SECRET_KEY"].encode()
 
 
 oauth = OAuth(app)
-oauth.register(
+keycloak = oauth.register(
     name="keycloak",
     client_id=app.config["KEYCLOAK_CLIENT_ID"],
     client_secret=app.config["KEYCLOAK_CLIENT_SECRET"],
@@ -48,15 +46,15 @@ def index():
 @app.route("/login", methods=["POST"])
 def login():
     redirect_uri = url_for("auth", _external=True)
-    return oauth.keycloak.authorize_redirect(redirect_uri)
+    return keycloak.authorize_redirect(redirect_uri)
 
 
 # Auth callback
 @app.route("/auth")
 def auth():
-    token = oauth.keycloak.authorize_access_token()
+    token = keycloak.authorize_access_token()
     print(token)
-    session["user"] = oauth.keycloak.parse_id_token(token, nonce=token.get("nonce"))
+    session["user"] = keycloak.parse_id_token(token, nonce=token.get("nonce"))
     return redirect("/")
 
 
@@ -64,7 +62,9 @@ def auth():
 @app.route("/logout", methods=["POST"])
 def logout():
     session.pop("user", None)
-    logout_url = f"{os.getenv('KEYCLOAK_LOGOUT_URL')}?redirect_uri={url_for('index', _external=True)}"
+    logout_url = f"{app.config['KEYCLOAK_LOGOUT_URL']}?redirect_uri={url_for('index', _external=True)}"
+
+    print(f"REDIRECT TO:{logout_url}")
     return redirect(logout_url)
 
 
