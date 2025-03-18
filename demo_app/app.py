@@ -1,5 +1,6 @@
+import requests
 from authlib.integrations.flask_client import OAuth
-from flask import Flask, redirect, render_template_string, session, url_for
+from flask import Flask, flash, redirect, render_template, session, url_for
 
 from demo_app.config import Config
 
@@ -21,49 +22,43 @@ keycloak = oauth.register(
 @app.route("/")
 def index():
     user = session.get("user")
-    if user:
-        return render_template_string(
-            """
-            <h1>Welcome, {{ user['name'] }}!</h1>
-            <form action="{{ url_for('logout') }}" method="post">
-                <button type="submit">Logout</button>
-            </form>
-        """,
-            user=user,
-        )
-    else:
-        return render_template_string(
-            """
-            <h1>Hello, you are not logged in.</h1>
-            <form action="{{ url_for('login') }}" method="post">
-                <button type="submit">Login</button>
-            </form>
-        """
-        )
+    return render_template("index.html", user=user)
 
 
 # Login page
 @app.route("/login", methods=["POST"])
 def login():
-    redirect_uri = url_for("auth", _external=True)
-    return keycloak.authorize_redirect(redirect_uri)
+    redirect_uri = url_for(".auth", _external=True)
+    return oauth.keycloak.authorize_redirect(redirect_uri)
 
 
 # Auth callback
 @app.route("/auth")
 def auth():
-    token = keycloak.authorize_access_token()
+    token = oauth.keycloak.authorize_access_token()
+    session["token_response"] = token
     print(token)
-    session["user"] = keycloak.parse_id_token(token, nonce=token.get("nonce"))
+    session["user"] = oauth.keycloak.parse_id_token(token, None)
     return redirect("/")
 
 
 # Logout
 @app.route("/logout", methods=["POST"])
 def logout():
-    session.pop("user", None)
-    logout_url = f"{app.config['KEYCLOAK_LOGOUT_URL']}?redirect_uri={url_for('index', _external=True)}"
-    return redirect(logout_url)
+    if session.get("token_response"):
+        refresh_token = session["token_response"]["refresh_token"]
+        requests.post(
+            app.config["KEYCLOAK_LOGOUT_URL"],
+            data={
+                "client_id": app.config["KEYCLOAK_CLIENT_ID"],
+                "client_secret": app.config["KEYCLOAK_CLIENT_SECRET"],
+                "refresh_token": refresh_token,
+            },
+        )
+        session.clear()
+        flash("You were logged out.", "success")
+
+    return redirect(url_for("index"))
 
 
 def main():

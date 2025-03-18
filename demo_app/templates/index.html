@@ -3,16 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask Keycloak Example</title>
+    <title>Flask Keycloak Demo</title>
+    <style>
+      .flashes { list-style: none; padding: 0; }
+      .flashes li { padding: 10px; margin-bottom: 5px; border-radius: 5px; }
+      .success { background-color: #d4edda; color: #155724; }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the Flask Keycloak Integration</h1>
-
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class=flashes>
+        {% for category, message in messages %}
+          <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
     {% if user %}
-    <p>Hello, {{ user['preferred_username'] }}!</p>
-    <p><a href="{{ url_for('logout') }}">Logout</a></p>
+        <h1>Welcome, {{ user.name }}!</h1>
+        <form action="{{ url_for('logout') }}" method="post">
+            <button type="submit">Logout</button>
+        </form>
     {% else %}
-    <p><a href="{{ url_for('login') }}">Login with Keycloak</a></p>
+        <h1>Hello, you are not logged in.</h1>
+        <form action="{{ url_for('login') }}" method="post">
+            <button type="submit">Login</button>
+        </form>
     {% endif %}
 </body>
 </html>

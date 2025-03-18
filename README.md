@@ -1,6 +1,6 @@
 # keycloak-python-auth
 
-Example code of auth using keycloak and python Flask
+Example code of auth using keycloak and python Flask (Authlib library)
 
 # Launch keycloak using docker-compose
 
@@ -50,14 +50,13 @@ Client settings:
 The client should have the following access settings:
 
 ```
-Root URL: http://127.0.0.1/
-Valid Redirect URIs: http://127.0.0.1:5000/auth
-Valid Post Logout Redirect URIs: http://127.0.0.1/
-Web Origins: http://127.0.0.1
+Root URL: http://localhost/
+Valid Redirect URIs: http://localhost:5000/auth
+Valid Post Logout Redirect URIs: http://localhost/
+Web Origins: http://localhost
 ```
 
 And 
-
 
 
 <img width="1038" alt="Image" src="https://github.com/user-attachments/assets/8cede065-b1ab-4448-aadc-717457b6c3de" />
