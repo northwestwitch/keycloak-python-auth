@@ -1,6 +1,6 @@
 # keycloak-python-auth
 
-Example code of auth using keycloak and python Flask
+Example code of auth using keycloak and python Flask (Authlib library)
 
 # Launch keycloak using docker-compose
 
@@ -47,7 +47,50 @@ Client settings:
 
 <img width="1398" alt="Image" src="https://github.com/user-attachments/assets/4a203d37-0fff-4395-a90f-fc1e3775a210" />
 
+The client should have the following access settings:
+
+```
+Root URL: http://localhost/
+Valid Redirect URIs: http://localhost:5000/auth
+Valid Post Logout Redirect URIs: http://localhost/
+Web Origins: http://localhost
+```
+
+And 
+
+
 <img width="1038" alt="Image" src="https://github.com/user-attachments/assets/8cede065-b1ab-4448-aadc-717457b6c3de" />
+
+Note that general client settings are accessible at this URL: `http://localhost:8080/realms/CG/.well-known/openid-configuration`
+
+### Install and launch the demo app
+
+After creating a conda environment containing Python >=3.9, activate the environment.
+
+#### Install the package:
+
+```
+pip install -r requirements.txt
+pip install -e .
+```
+
+#### Launch the package
+
+```
+kcdemo
+```
+
+#### Login/logout test page
+
+
+Will be available in a browser at the following URL: `http://localhost:5000/`
+
+You can now try the user login with user email and password specified in the Keycloack settings ("clark.kent@mail.com", "test"):
+
+
+<img width="551" alt="image" src="https://github.com/user-attachments/assets/6635d2e8-ff7b-45c5-8524-e62ab00b592e" />
+
+
 
 
 
