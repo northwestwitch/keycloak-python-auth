@@ -63,4 +63,34 @@ And
 
 Note that general client settings are accessible at this URL: `http://localhost:8080/realms/CG/.well-known/openid-configuration`
 
+### Install and launch the demo app
+
+After creating a conda environment containing Python >=3.9, activate the environment.
+
+#### Install the package:
+
+```
+pip install -r requirements.txt
+pip install -e .
+```
+
+#### Launch the package
+
+```
+kcdemo
+```
+
+#### Login/logout test page
+
+
+Will be available in a browser at the following URL: `http://localhost:5000/`
+
+You can now try the user login with user email and password specified in the Keycloack settings ("clark.kent@mail.com", "test"):
+
+
+<img width="551" alt="image" src="https://github.com/user-attachments/assets/6635d2e8-ff7b-45c5-8524-e62ab00b592e" />
+
+
+
+
 
