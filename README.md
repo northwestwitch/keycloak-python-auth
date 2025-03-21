@@ -5,7 +5,7 @@ Example code of auth using keycloak and python Flask (Authlib library)
 # Launch keycloak using docker-compose
 
 ```
-docker-compose up
+docker compose up
 ```
 
 ## Log in into Keycloak and edit the settings
@@ -74,6 +74,11 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
+#### Configure client secret
+
+From the KeyCloak admin console, obtain the Client Secret for your created client from the bottom of the Credentials tab, 
+and set the demo app client secret `KEYCLOAK_CLIENT_SECRET` to this same value (in [`demo_app/config.py`](https://github.com/northwestwitch/keycloak_flask_auth/blob/b6cfbd1fe8e8295821927be07a2fcc4026deb9fe/demo_app/config.py#L6)).
+
 #### Launch the package
 
 ```
@@ -89,8 +94,5 @@ You can now try the user login with user email and password specified in the Key
 
 
 <img width="551" alt="image" src="https://github.com/user-attachments/assets/6635d2e8-ff7b-45c5-8524-e62ab00b592e" />
-
-
-
 
 
